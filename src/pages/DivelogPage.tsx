@@ -221,11 +221,7 @@ function DivelogPage() {
               type="number"
               error={year ? isNaN(year) : true}
               helperText={
-                year
-                  ? isNaN(year)
-                    ? "Input must be a number"
-                    : ""
-                  : "Input cannot be empty"
+                year ? "" : "Input cannot be empty and must be a number"
               }
               onChange={(e) => setYear(parseInt(e.target.value))}
             />

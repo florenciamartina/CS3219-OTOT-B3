@@ -59,7 +59,7 @@ function DeleteDivelogDialog(props: DeleteDivelogDialog) {
   };
 
   return (
-    <Dialog open={dialogOpen}>
+    <Dialog sx={{ padding: "1rem" }} open={dialogOpen}>
       <DialogTitle>Delete Divelog</DialogTitle>
 
       <Box position="absolute" top={0} right={0}>
@@ -68,12 +68,17 @@ function DeleteDivelogDialog(props: DeleteDivelogDialog) {
         </IconButton>
       </Box>
 
-      <Typography>
-        Are you sure you want to delete {props.divelog.name}?
-      </Typography>
-      <Box sx={{ flexDirection: "row" }}>
-        <Button onClick={handleDelete}>Yes</Button>
-        <Button>Cancel</Button>
+      <Box sx={{ padding: "0 1rem 1rem 1rem" }}>
+        <Typography>
+          Are you sure you want to delete {props.divelog.name}?
+        </Typography>
+        <Box sx={{ flexDirection: "row" }}>
+          <Button onClick={handleDelete}>
+            {loading && <CircularProgress size={18} sx={{ mr: 1 }} />}
+            Yes
+          </Button>
+          <Button>Cancel</Button>
+        </Box>
       </Box>
     </Dialog>
   );
