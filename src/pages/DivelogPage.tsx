@@ -219,7 +219,7 @@ function DivelogPage() {
               variant="outlined"
               value={year}
               type="number"
-              error={year ? !isNaN(year) : true}
+              error={year ? isNaN(year) : true}
               helperText={
                 year
                   ? isNaN(year)
