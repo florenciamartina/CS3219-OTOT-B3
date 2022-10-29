@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { useState, useEffect } from "react";
 import {
   Button,
   Container,
   CircularProgress,
+  Grid,
   IconButton,
-  TextField,
   Typography,
 } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
@@ -25,6 +23,7 @@ import { faculties } from "../json/faculties";
 import { departments } from "../json/departments";
 import { mcs } from "../json/mcs";
 import ModuleCard from "../components/ModuleCard";
+import { blue } from "@mui/material/colors";
 
 function NUSModsPage() {
   const navigate = useNavigate();
@@ -87,21 +86,18 @@ function NUSModsPage() {
 
   return (
     <Container
-      maxWidth="xs"
       sx={{
-        height: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        height: "90vh",
       }}
     >
       <Container
-        maxWidth="xs"
         sx={{
-          height: "100vh",
           display: "flex",
-          // flexDirection: "column",
           alignItems: "center",
+          padding: "2rem",
         }}
       >
         <Button onClick={() => navigate("/home")}>
@@ -186,14 +182,40 @@ function NUSModsPage() {
           </Select>
         </FormControl>
 
-        <Button type="button" aria-label="search" onClick={searchModules}>
+        <IconButton
+          onClick={searchModules}
+          sx={{
+            backgroundColor: blue[600],
+            "&:hover": {
+              backgroundColor: blue[900],
+            },
+            height: "min-content",
+            color: "white",
+          }}
+        >
           {loading && <CircularProgress size={18} sx={{ mr: 1 }} />}
-          {!loading && <SearchIcon style={{ fill: "blue" }} />}
-        </Button>
+          <SearchIcon />
+        </IconButton>
       </Container>
 
-      {modules.length > 0 &&
-        modules?.map((module: Module) => <ModuleCard module={module} />)}
+      {!modules && <Typography>No modules found.</Typography>}
+      {modules && modules.length > 0 && (
+        <Grid
+          container
+          direction="row"
+          spacing={"2rem"}
+          style={{
+            maxHeight: "80vh",
+            overflowY: "auto",
+            overflowX: "hidden",
+            width: "100vw",
+          }}
+        >
+          {modules?.map((module: Module) => (
+            <ModuleCard module={module} />
+          ))}
+        </Grid>
+      )}
 
       {!loading && modules.length == 0 && (
         <Typography>
@@ -203,10 +225,17 @@ function NUSModsPage() {
 
       {loading && <Typography>Loading...</Typography>}
 
-      {page > 1 && <Button onClick={(e) => setPage(page - 1)}>Prev</Button>}
-      {page + 1 <= maxPage && (
-        <Button onClick={(e) => setPage(page + 1)}>Next</Button>
-      )}
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-end"
+        sx={{ paddingTop: "1rem" }}
+      >
+        {page > 1 && <Button onClick={(e) => setPage(page - 1)}>Prev</Button>}
+        {page + 1 <= maxPage && (
+          <Button onClick={(e) => setPage(page + 1)}>Next</Button>
+        )}
+      </Grid>
     </Container>
   );
 }
