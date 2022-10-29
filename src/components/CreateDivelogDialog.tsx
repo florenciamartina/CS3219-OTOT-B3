@@ -9,7 +9,7 @@ import {
   IconButton,
   TextField,
 } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import { Close, KeyboardReturnOutlined } from "@mui/icons-material";
 import { useSnackbar } from "../context/SnackbarContext";
 import { getUsername } from "../context/UserContext";
 import { requests } from "../utils/api-requests";
@@ -18,6 +18,7 @@ import { CREATE_DIVELOG, DIVELOG_URL } from "../configs";
 type CreateDivelogDialog = {
   dialogOpen: boolean;
   setDialogOpen: (isOpen: boolean) => void;
+  refreshDivelogs: () => void;
 };
 
 function CreateDivelogDialog(props: CreateDivelogDialog) {
@@ -30,7 +31,7 @@ function CreateDivelogDialog(props: CreateDivelogDialog) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // const username = getUsername();
-    const username = "ben";
+    const username = data.get("username");
     const name = data.get("name");
     const year = data.get("year");
     const location = data.get("location");
@@ -57,10 +58,14 @@ function CreateDivelogDialog(props: CreateDivelogDialog) {
       .post(DIVELOG_URL, CREATE_DIVELOG, body)
       .then(({ data: { message }, status }) => {
         console.log(message);
-        if (status !== 201) throw new Error(message);
+        if (status !== 201) {
+          snackBar.setError(message);
+          return;
+        }
         // success
         setDialogOpen(false);
         snackBar.setSuccess(message, 3000);
+        props.refreshDivelogs();
       })
       .catch((err) => {
         console.log(err);
@@ -83,9 +88,7 @@ function CreateDivelogDialog(props: CreateDivelogDialog) {
 
       <Box
         sx={{
-          paddingLeft: 5,
-          paddingRight: 5,
-          paddingBottom: 5,
+          padding: "2rem",
         }}
         component="form"
         autoComplete="off"
@@ -94,11 +97,24 @@ function CreateDivelogDialog(props: CreateDivelogDialog) {
         <Grid container spacing={4}>
           <Grid item xs={12}>
             <TextField
+              placeholder="Username"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              type="text"
+              variant="standard"
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
               placeholder="Name"
               required
               fullWidth
               id="name"
-              label="name"
+              label="Name"
               name="name"
               type="text"
               variant="standard"
@@ -111,9 +127,9 @@ function CreateDivelogDialog(props: CreateDivelogDialog) {
               required
               fullWidth
               id="year"
-              label="year"
+              label="Year"
               name="year"
-              type="nunber"
+              type="number"
               variant="standard"
             />
           </Grid>
@@ -124,7 +140,7 @@ function CreateDivelogDialog(props: CreateDivelogDialog) {
               required
               fullWidth
               id="location"
-              label="location"
+              label="Location"
               name="location"
               type="text"
               variant="standard"
@@ -133,10 +149,10 @@ function CreateDivelogDialog(props: CreateDivelogDialog) {
 
           <Grid item xs={12}>
             <TextField
-              placeholder="Depth"
+              placeholder="Depth (metres)"
               fullWidth
               id="depth"
-              label="depth"
+              label="Depth"
               name="depth"
               type="number"
               variant="standard"
@@ -145,10 +161,10 @@ function CreateDivelogDialog(props: CreateDivelogDialog) {
 
           <Grid item xs={12}>
             <TextField
-              placeholder="Duration"
+              placeholder="Duration (minutes)"
               fullWidth
               id="duration"
-              label="duration"
+              label="Duration"
               name="duration"
               type="number"
               variant="standard"
@@ -157,10 +173,10 @@ function CreateDivelogDialog(props: CreateDivelogDialog) {
 
           <Grid item xs={12}>
             <TextField
-              placeholder="Comments"
+              placeholder="Comments about the dive"
               fullWidth
               id="comments"
-              label="comments"
+              label="Comments"
               name="comments"
               type="text"
               variant="standard"

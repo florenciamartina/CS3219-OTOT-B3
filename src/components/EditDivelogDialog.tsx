@@ -21,6 +21,7 @@ type EditDivelogDialog = {
   dialogOpen: boolean;
   setDialogOpen: (isOpen: boolean) => void;
   divelog: Divelog;
+  refreshDivelogs: () => void;
 };
 
 function EditDivelogDialog(props: EditDivelogDialog) {
@@ -60,6 +61,7 @@ function EditDivelogDialog(props: EditDivelogDialog) {
         // success
         setDialogOpen(false);
         snackBar.setSuccess(message, 3000);
+        props.refreshDivelogs();
       })
       .catch((err) => {
         console.log(err);

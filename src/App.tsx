@@ -6,8 +6,9 @@ import {
 } from "react-router-dom";
 import DivelogPage from "./pages/DivelogPage";
 import HomePage from "./pages/HomePage";
-import "./App.css";
 import NUSModsPage from "./pages/NUSModsPage";
+import Navbar from "./components/Navbar";
+import "./App.css";
 
 function App() {
   const loggedInRoutes = (
@@ -22,7 +23,10 @@ function App() {
 
   return (
     <div className="App" style={{ minHeight: "100vh" }}>
-      <Router>{loggedInRoutes}</Router>
+      <Router>
+        <Navbar />
+        {loggedInRoutes}
+      </Router>
     </div>
   );
 }

@@ -1,6 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Container, IconButton, TextField } from "@mui/material";
+import {
+  Button,
+  Container,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -16,8 +22,7 @@ function HomePage() {
           alignItems: "center",
         }}
       >
-        <Button onClick={() => navigate("/divelog")}>Task B1</Button>
-        <Button onClick={() => navigate("/nusmods")}>Task B4</Button>
+        <Typography>Welcome to Florencia's CS3219 Task B</Typography>
       </Container>
     </div>
   );

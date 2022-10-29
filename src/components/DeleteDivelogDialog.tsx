@@ -21,6 +21,7 @@ type DeleteDivelogDialog = {
   dialogOpen: boolean;
   setDialogOpen: (isOpen: boolean) => void;
   divelog: Divelog;
+  refreshDivelogs: () => void;
 };
 
 function DeleteDivelogDialog(props: DeleteDivelogDialog) {
@@ -46,6 +47,7 @@ function DeleteDivelogDialog(props: DeleteDivelogDialog) {
         // success
         setDialogOpen(false);
         snackBar.setSuccess(message, 3000);
+        props.refreshDivelogs();
       })
       .catch((err) => {
         console.log(err);
