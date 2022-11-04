@@ -1,15 +1,6 @@
-import React, { useState } from "react";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Button,
-  Stack,
-  Typography,
-  Menu,
-  MenuItem,
-} from "@mui/material";
-import { SchoolSharp, SettingsSharp } from "@mui/icons-material";
+import React from "react";
+import { AppBar, Toolbar, IconButton, Button } from "@mui/material";
+import ScubaDivingIcon from "@mui/icons-material/ScubaDiving";
 import { useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 
@@ -27,7 +18,7 @@ function Navbar() {
           aria-label="menu"
           onClick={() => navigate("/home")}
         >
-          <SchoolSharp />
+          <ScubaDivingIcon />
         </IconButton>
 
         <Button
